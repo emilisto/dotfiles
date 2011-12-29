@@ -1,0 +1,38 @@
+#!/bin/bash
+
+REPO=gitosis@konquest
+KEY=emil@Emils-MacBook-Pro.local
+
+if test -z "$1"
+then
+  echo "Syntax: gitit <repo name>"
+  exit 1
+fi
+
+if [ -e ".git" ]
+then
+  echo ".git already exists in currenct directory."
+  exit 1
+fi
+
+CWD=`pwd`
+
+# Create repository in gitosis
+  TMPPATH=/tmp/gitosis-admin2
+  rm -rf $TMPPATH
+  git clone $REPO:gitosis-admin.git $TMPPATH && cd $TMPPATH
+  cat >> $TMPPATH/gitosis.conf <<EOF
+[group $1]
+members = $KEY
+writable = $1
+EOF
+  git commit -a -m "Added repository '$1'." && git push
+
+  cd $CWD && rm -rf $TMPPATH
+
+git init
+git add .
+git commit -a -m "Initial commit."
+git remote add origin $REPO:$1.git
+git push origin master
+
