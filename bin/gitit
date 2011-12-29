@@ -1,0 +1,9 @@
+#!/bin/bash
+
+REPO=gitosis@konquest
+
+git init
+git add .
+git commit -a -m "Initial commit."
+git remote add origin $REPO:$1.git
+git push

@@ -1,0 +1,24 @@
+let mapleader=","
+
+set autoindent
+nmap > :split<cr>
+nmap < :vsplit<cr>
+
+nmap <C-s> <esc>:w<cr>
+
+nmap <C-g><C-s> :Gstatus<cr>
+nmap <C-g><C-d> :Gdiff<cr>
+nmap <C-g><C-r> :Gread<cr>
+nmap <C-g><C-l> :Glog<cr>
+imap <C-e> <esc>$a
+imap <C-a> <esc>I
+imap <C-s> <esc>:w<cr>
+
+"nmap <C-c><C-f> _v$%$zf
+nmap <C-c><C-f> v%zf
+nmap <C-n> :bnext<cr>
+nmap <C-m> :bprev<cr>
+nmap <C-j> :Bclose<cr>
+
+" Reload vimrc
+nmap <F3> :so ~/.vimrc.local<cr>
