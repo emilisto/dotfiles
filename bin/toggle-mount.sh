@@ -14,17 +14,27 @@ function quitProcesses {
   fi
 }
 
-function unmount {
-  diskutil umount "$VOLUME"
-  diskutil eject "/dev/disk1"
+function _unmount {
+  #diskutil umount "$VOLUME"
+  diskutil eject "$DEVICE"
 }
-function mount {
+function _mount {
   diskutil mount "$DEVICE"
 }
 
+# Either use command line arguments..
 if [ "$1" == "unmount" ]; then
-  quitProcesses
-  unmount
+  _unmount
 elif [ "$1" == "mount" ]; then
-  mount
+  _mount
+# .. or toggle, i.e. unmount if mounted and vice versa
+else
+  MOUNTED=$(mount | grep $DEVICE |wc -l)
+  if [ "$MOUNTED" -eq "1" ]; then
+    _unmount
+  else
+    _mount
+  fi
 fi
+
+

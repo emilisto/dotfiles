@@ -1,24 +1,63 @@
-let mapleader=","
+" emilisto's vimrc
+"
+" Rightfully stolen/inspired from:
+"
+"   https://github.com/ryanb/dotfiles/blob/master/vimrc
+"   http://stevelosh.com/blog/2010/09/coming-home-to-vim/#using-the-leader
+"
 
+let mapleader=","
 set autoindent
+
 nmap > :split<cr>
 nmap < :vsplit<cr>
 
-nmap <C-s> <esc>:w<cr>
-
+" Fugitive shortcuts
 nmap <C-g><C-s> :Gstatus<cr>
 nmap <C-g><C-d> :Gdiff<cr>
 nmap <C-g><C-r> :Gread<cr>
 nmap <C-g><C-l> :Glog<cr>
-imap <C-e> <esc>$a
+
+" Emacsy CTRL-E/A naviation in insert mode
+imap <C-e> <esc>A
 imap <C-a> <esc>I
+map <C-e> A
+map <C-a> I
 imap <C-s> <esc>:w<cr>
 
-"nmap <C-c><C-f> _v$%$zf
+" Create fold from symbol at end of line
+"nmap <C-c><C-f> $%zf
+" Create fold from symbol under cusor
 nmap <C-c><C-f> v%zf
+
+" Navigate buffers
 nmap <C-n> :bnext<cr>
 nmap <C-m> :bprev<cr>
 nmap <C-j> :Bclose<cr>
 
+" Rarely use double j anyway
+inoremap jj <ESC>
+
 " Reload vimrc
 nmap <F3> :so ~/.vimrc.local<cr>
+
+" Press Shift+P while in visual mode to replace the selection without
+" overwriting the default register
+vmap P p :call setreg('"', getreg('0')) <CR>
+
+" Open URL in browser
+command -bar -nargs=1 OpenURL :!open <args>
+function! OpenURL()
+  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
+  echo s:uri
+  if s:uri != ""
+	  exec "!open \"" . s:uri . "\""
+  else
+	  echo "No URI found in line."
+  endif
+endfunction
+map <Leader>w :call OpenURL()<CR>
+
+" Opens an edit command with the path of the currently edited file filled in
+" Normal mode: <Leader>e
+map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>

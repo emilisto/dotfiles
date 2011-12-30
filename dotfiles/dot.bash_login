@@ -1,6 +1,9 @@
-alias ls="ls -G"
-
 test -r /sw/bin/init.sh && . /sw/bin/init.sh
-export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules:~/dev/node_modules
-export PATH=$PATH:~/bin
-alias php=/usr/local/bin/php.dSYM
+
+# Load all scripts in ~/.bash
+EXTRADIR=~/.bash
+if [ -d "$EXTRADIR" ]; then
+  for F in `find $EXTRADIR -type f | xargs`; do
+    source $F
+  done
+fi
