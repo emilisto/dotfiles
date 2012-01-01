@@ -1,2 +1,5 @@
 alias php=/usr/local/bin/php.dSYM
 alias ls="ls -G"
+
+# Copy output to clipboard
+alias c="cat | pbcopy"

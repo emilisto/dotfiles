@@ -4,6 +4,7 @@
 "
 "   https://github.com/ryanb/dotfiles/blob/master/vimrc
 "   http://stevelosh.com/blog/2010/09/coming-home-to-vim/#using-the-leader
+"   https://github.com/rtomayko/dotfiles/blob/rtomayko/.vimrc
 "
 
 let mapleader=","
@@ -46,7 +47,7 @@ nmap <F3> :so ~/.vimrc.local<cr>
 vmap P p :call setreg('"', getreg('0')) <CR>
 
 " Open URL in browser
-command -bar -nargs=1 OpenURL :!open <args>
+command! -bar -nargs=1 OpenURL :!open <args>
 function! OpenURL()
   let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
   echo s:uri
@@ -61,3 +62,20 @@ map <Leader>w :call OpenURL()<CR>
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>e
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+"  Strip all trailing whitespace in file
+function! StripWhitespace ()
+    exec ':%s/ \+$//gc'
+endfunction
+map ,s :call StripWhitespace ()<CR>
+
+" make file executable
+command -nargs=* Xe !chmod +x <args>
+command! -nargs=* Xe !chmod +x %
+
+function! MakeExecutableAndReload()
+  exec ':Xe'
+  " avoid 'reload file' dialog
+  exec ':e'
+endfunction
+map <leader>x :call MakeExecutableAndReload()<cr>

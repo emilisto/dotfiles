@@ -1,5 +1,24 @@
+export EDITOR="vim"
+
 # From Zach Holman's dotfiles
 if $(grc &>/dev/null)
 then
   source `brew --prefix`/etc/grc.bashrc
 fi
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob
+
+# From https://github.com/mathiasbynens/dotfiles
+
+# Larger bash history (allow 32³ entries; default is 500)
+export HISTSIZE=32768
+export HISTFILESIZE=$HISTSIZE
+export HISTCONTROL=ignoredups
+# Make some commands not show up in history
+export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
+
+# Create a new directory and enter it
+function md() {
+	mkdir -p "$@" && cd "$@"
+}
