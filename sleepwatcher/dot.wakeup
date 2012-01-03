@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Unmount extra disk
+~/bin/toggle-mount.sh unmount
