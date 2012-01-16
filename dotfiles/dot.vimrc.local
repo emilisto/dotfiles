@@ -25,11 +25,12 @@ imap <C-a> <esc>I
 map <C-e> A
 map <C-a> I
 imap <C-s> <esc>:w<cr>
+map <C-s> :w<cr>
 
 " Create fold from symbol at end of line
-"nmap <C-c><C-f> $%zf
+" nmap <C-c><C-f> $%zf<cr>
 " Create fold from symbol under cusor
-nmap <C-c><C-f> v%zf
+nmap <C-c><C-f> v$%zf
 
 " Navigate buffers
 nmap <C-n> :bnext<cr>
