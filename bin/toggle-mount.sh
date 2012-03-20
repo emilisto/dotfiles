@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VOLUME="/Volumes/Mac OS X"
+VOLUME="/Volumes/Storage"
 DEVICE="/dev/disk1s2"
 
 # TODO: use device name instead, extract mount point fom awk somehow

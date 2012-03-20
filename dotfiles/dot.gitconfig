@@ -1,0 +1,14 @@
+[user]
+	name = Emil Stenqvist
+	email = emsten@gmail.com
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+[alias]
+  co = checkout
+  s = status
+  p = pull
+  l = log --graph --pretty=format:'%C(yellow)%h %Cgreen%ae%Creset (%ar): %s'
+
