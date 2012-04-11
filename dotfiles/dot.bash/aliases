@@ -3,3 +3,6 @@ alias ls="ls -G"
 
 # Copy output to clipboard
 alias c="cat | pbcopy"
+alias fj=formatjson.py
+alias gs="git status"
+alias gm="git co master"

@@ -8,7 +8,24 @@
   branch = auto
 [alias]
   co = checkout
+  cm = commit
   s = status
+  ba = branch -a
+  d = diff
   p = pull
-  l = log --graph --pretty=format:'%C(yellow)%h %Cgreen%ae%Creset (%ar): %s'
+  ; l = log --graph --pretty=format:'%C(yellow)%h %Cgreen%ae%Creset (%ar): %s'
+  l = log --graph --decorate --pretty=oneline --abbrev-commit
+  ; All branches
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 
+  ; From https://gist.github.com/492227
+  wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"wip\""
+	unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
+	rb = !"git wip;git rebase -i origin/master;git unwip"
+	lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
+  sc = !"git commit -a -m '...'"
+  m = !"git checkout master"
+
+  ; From https://github.com/alikins/gitconfig/blob/master/gitconfig
+  brlog = "!sh -c 'for C in $(git for-each-ref --sort=committerdate refs/heads --format=\"%(refname:short)\") ; do git show  -s --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset  $C\" \"$C\" -- ; git show --stat -s $C ; echo; done'"
+  unadd = !"git reset HEAD"
