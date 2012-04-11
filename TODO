@@ -1,0 +1,3 @@
+- Sort up sleepwatcher script and create README
+- Add setup.sh so I can setup environment on any server by pulling repo and running script
+- Find out where I got the macosx tips from and add credits
