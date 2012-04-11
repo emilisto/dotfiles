@@ -1,5 +1,10 @@
 " emilisto's vimrc
 "
+" I use Janus Vim Distribution, and I think this vimrc is not much use without
+" it.
+"
+" https://github.com/carlhuda/janus
+"
 " Rightfully stolen/inspired from:
 "
 "   https://github.com/ryanb/dotfiles/blob/master/vimrc
@@ -24,8 +29,9 @@ imap <C-e> <esc>A
 imap <C-a> <esc>I
 map <C-e> A
 map <C-a> I
+map <C-s> <esc>:w<cr>
 imap <C-s> <esc>:w<cr>
-map <C-s> :w<cr>
+map E :Edit 
 
 " Create fold from symbol at end of line
 " nmap <C-c><C-f> $%zf<cr>
@@ -42,7 +48,7 @@ nmap <C-r> zz
 " Navigate buffers
 nmap <C-n> :bnext<cr>
 nmap <C-m> :bprev<cr>
-map <C-j> :Bclose<cr>
+nmap <C-j> :Bclose<cr>
 
 " Rarely use double j anyway
 inoremap jj <ESC>
@@ -89,3 +95,35 @@ endfunction
 map <leader>x :call MakeExecutableAndReload()<cr>
 
 let g:Tex_ViewRule_pdf = 'open'
+
+" NERDtree stuff
+  " autocmd VimEnter * NERDTreeClose
+  " nmap <C-K> :NERDTreeToggle<cr>
+  " let loaded_nerd_tree = 0
+
+  " Set cwd to the that of the file in active window
+  "set autochdir
+
+" All vim yanking will go to global clipboard
+set clipboard=unnamed
+
+" Automatically re-read buffers whose files have changed externally
+set autoread
+
+" MacVim color theme
+colo navajo-night
+
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+
+" When switching tabs, change to the current directory of the file
+" autocmd BufEnter *.py,*.html,*.haml,*.css,*.js :Rooter
