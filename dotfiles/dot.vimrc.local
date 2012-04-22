@@ -111,7 +111,7 @@ set clipboard=unnamed
 set autoread
 
 " MacVim color theme
-colo navajo-night
+" colo navajo-night
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -127,3 +127,6 @@ vnoremap <silent> # :<C-U>
 
 " When switching tabs, change to the current directory of the file
 " autocmd BufEnter *.py,*.html,*.haml,*.css,*.js :Rooter
+
+" LaTeX shortcuts
+map ,c :silent! call Tex_RunLaTeX()<CR>
