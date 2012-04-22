@@ -7,3 +7,4 @@ alias fj=formatjson.py
 alias gs="git status"
 alias gm="git co master"
 alias latest="gfind . -type f -printf '%T@ %p\n' | sort -k 1 -n | sed 's/^[^ ]* //' | tail -n 10"
+alias noti="echo 'Hey iTerm2, look at me!'"

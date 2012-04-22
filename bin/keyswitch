@@ -1,0 +1,27 @@
+#!/bin/bash
+
+SSHDIR=~/.ssh
+
+LINK=$SSHDIR/id_dsa
+KEY1=$SSHDIR/id_dsa.work
+KEY2=$SSHDIR/id_dsa.hemma
+
+CURRENT_LINK=$(readlink -f $LINK)
+
+# Switch key
+if [ "$CURRENT_LINK" == "$KEY1" ]; then
+  KEY=$KEY2
+else 
+  KEY=$KEY1
+fi
+
+rm -f $LINK
+ln -s $KEY $LINK
+
+if [ "$(ps ax | grep ssh-agent | wc -l)" -gt 1 ]; then
+  killall ssh-agent
+fi
+
+#ssh-add $LINK
+
+echo "current key: $(readlink -f $LINK)"

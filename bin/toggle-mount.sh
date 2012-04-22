@@ -37,4 +37,5 @@ else
   fi
 fi
 
-
+# Exit with last exit command
+exit $?
