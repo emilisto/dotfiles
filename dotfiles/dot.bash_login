@@ -1,9 +1,0 @@
-test -r /sw/bin/init.sh && . /sw/bin/init.sh
-
-# Load all scripts in ~/.bash
-EXTRADIR=~/.bash
-if [ -d "$EXTRADIR" ]; then
-  for F in `find $EXTRADIR/ -type f | xargs`; do
-    source $F
-  done
-fi

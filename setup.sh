@@ -3,11 +3,11 @@
 # TODO: install carlhuda automatically
 # https://github.com/carlhuda/janus.git
 
-HOMEDIR=~
-BASEDIR=`dirname $0`
 
-FILES=".vimrc.local .gvimrc.local .vimrc .inputrc .bash .gitconfig"
+# Files to move
+FILES=".vimrc.local .gvimrc.local .inputrc .bash .gitconfig"
 
+# Convert relative -> absolute path
 function absolute_path() {
   local PARENT_DIR=$(dirname "$1")
   cd "$PARENT_DIR"
@@ -17,20 +17,50 @@ function absolute_path() {
   echo $ABS_PATH
 }
 
+# Path to this script
+BASEDIR=`dirname $0`
+
+# If .vim doesn't exist, install Janus
+if [ ! -e ~/.vim ]; then
+  echo "Installing Janus Vim Distribution"
+  curl -Lo- http://bit.ly/janus-bootstrap | bash
+  echo "done."
+  echo
+fi
+
+# Link all config files, save as $F.old if already found
 for F in $FILES; do
-  if [ -e $HOMEDIR/$F ]; then
-    mv $HOMEDIR/$F{,.old}
+  if [ -e ~/$F ]; then
+    mv ~/$F{,.old}
     echo "moved existing $F to $F.old"
   fi
 
-  ln -s $(absolute_path $BASEDIR/dotfiles/dot$F) $HOMEDIR/$F
+  ln -s $(absolute_path $BASEDIR/dotfiles/dot$F) ~/$F
 done
 
-if [ -e $HOMEDIR/bin ]; then
-  mv $HOMEDIR/bin{,.old}
+# Link bin directory
+test -e ~/bin && mv ~/bin{,.old}
+ln -s $BASEDIR/bin ~/bin
+
+# Add loading routine to ~/.bash_profile UNLESS already added
+touch ~/.bash_profile
+if [ ! "$(grep 'Load all scripts in ~/.bash' ~/.bash_profile)" ]; then
+
+  cat >> ~/.bash_profile <<"EOF"
+
+# Load all scripts in ~/.bash
+EXTRADIR=~/.bash
+if [ -d "$EXTRADIR" ]; then
+  for F in `find $EXTRADIR/ -type f | xargs`; do
+    if [ "$(basename $F)" != "local" ]; then
+      source $F
+    fi
+  done
+
+  # Load .bash/local last to make sure it overrides all others
+  test -e "$EXTRADIR/local" && source "$EXTRADIR/local"
 fi
 
-ln -s $BASEDIR/bin $HOMEDIR/bin
+EOF
 
-#   
-cat $BASEDIR/dotfiles/dot.bash_login >> $HOMEDIR/.bash_profile
+fi
