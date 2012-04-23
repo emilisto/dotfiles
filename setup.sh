@@ -40,7 +40,7 @@ done
 
 # Link bin directory
 test -e ~/bin && mv ~/bin{,.old}
-ln -s $BASEDIR/bin ~/bin
+ln -s $(absolute_path $BASEDIR/bin) ~/bin
 
 # Add loading routine to ~/.bash_profile UNLESS already added
 touch ~/.bash_profile
