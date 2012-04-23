@@ -130,3 +130,7 @@ vnoremap <silent> # :<C-U>
 
 " LaTeX shortcuts
 map ,c :silent! call Tex_RunLaTeX()<CR>
+
+" clear search results
+" https://github.com/briandoll/dotfiles/blob/master/vimrc
+map <leader>cs :noh<CR>
